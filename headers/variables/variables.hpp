@@ -6,6 +6,12 @@ namespace algb
 {
   namespace vrbl
   {
+
+    // vector<float>
+    // string
+    // vector<string> -> vector<float> or string
+    // struct variable{void* val, type id}
+    // map<string, vrbl>
     template <class... Ts>
     class Database
     {

@@ -70,9 +70,6 @@ namespace algb
 
       template <class T>
       static auto getAngleBetweenVectors(container_type<T> const &left, container_type<T> const &right) -> container_type<T>;
-
-      template <class T>
-      static auto applyFunctionForEachVectorElement(container_type<T> const &vect, value_type (*function)(value_type)) -> container_type<T>;
     };
 
     class File
@@ -254,17 +251,4 @@ template <class T>
 auto algb::libr::Oprt::getAngleBetweenVectors(container_type<T> const &left, container_type<T> const &right) -> container_type<T>
 {
   return container_type<T>{divisionByScalar(dotProduct(left, right), dotProduct(norm(left), norm(right)))};
-}
-
-template <class T>
-auto algb::libr::Oprt::applyFunctionForEachVectorElement(container_type<T> const &vect, value_type (*function)(value_type)) -> container_type<T>
-{
-  container_type<T> result;
-
-  for (T element : vect)
-  {
-    result.push_back(function(element));
-  }
-
-  return result;
-}
+};
