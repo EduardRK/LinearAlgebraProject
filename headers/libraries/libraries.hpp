@@ -11,6 +11,7 @@ namespace algb
   {
     using char_type = char;
     using value_type = float;
+    using message_type = char[];
     using line_type = std::string;
     using lines_type = std::vector<std::string>;
 
@@ -33,6 +34,9 @@ namespace algb
       Oprt();
       ~Oprt();
       static constexpr value_type DIMENSION_CROSS_PRODUCT = 3;
+      static constexpr message_type SHOULD_BE_SCALAR = "Should be scalar";
+      static constexpr message_type DIFFERENT_DIMENSIONS = "Different dimensions";
+      static constexpr message_type WRONG_DIMENSIONS = "Wrong dimensions";
 
     public:
       template <class T>
@@ -48,13 +52,13 @@ namespace algb
       static auto sum(container_type<T> const &left, container_type<T> const &right) -> container_type<T>;
 
       template <class T>
-      static auto increment(container_type<T> const &scalar) -> container_type<T>;
+      static auto increment(container_type<T> &scalar) -> container_type<T>;
 
       template <class T>
       static auto sub(container_type<T> const &left, container_type<T> const &right) -> container_type<T>;
 
       template <class T>
-      static auto decrement(container_type<T> const &scalar) -> container_type<T>;
+      static auto decrement(container_type<T> &scalar) -> container_type<T>;
 
       template <class T>
       static auto norm(container_type<T> const &vect) -> container_type<T>;
@@ -101,12 +105,12 @@ auto algb::libr::Oprt::dotProduct(container_type<T> const &left, container_type<
 {
   if (left.size() != right.size())
   {
-    throw std::invalid_argument("Invalid argument");
+    throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
   T temp = 0;
 
-  for (int i = 0; i < left.size(); ++i)
+  for (size_t i = 0; i < left.size(); ++i)
   {
     temp += left.at(i) * right.at(i);
   }
@@ -119,7 +123,7 @@ auto algb::libr::Oprt::crossProduct(container_type<T> const &left, container_typ
 {
   if (left.size() != DIMENSION_CROSS_PRODUCT || left.size() != DIMENSION_CROSS_PRODUCT)
   {
-    throw std::invalid_argument("Invalid argument");
+    throw std::invalid_argument(WRONG_DIMENSIONS);
   }
 
   value_type firstCoord = left.at(1) * right.at(2) - left.at(2) * left.at(1);
@@ -134,10 +138,10 @@ auto algb::libr::Oprt::pow(container_type<T> const &base, container_type<T> cons
 {
   if (base.size() != 1 || exponent.size() != 1)
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  return container_type<T>{pow(base.at(0), exponent.at(0))};
+  return container_type<T>{powf(base.at(0), exponent.at(0))};
 }
 
 template <class T>
@@ -145,24 +149,24 @@ auto algb::libr::Oprt::sum(container_type<T> const &left, container_type<T> cons
 {
   if (left.size() != right.size())
   {
-    throw std::invalid_argument("Invalid argument");
+    throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
   container_type<T> result;
-  for (int i = 0; i < left.size(); ++i)
+  for (size_t i = 0; i < left.size(); ++i)
   {
-    result.push_back(left.at(i) + left.at(i));
+    result.push_back(left.at(i) + right.at(i));
   }
 
   return result;
 }
 
 template <class T>
-auto algb::libr::Oprt::increment(container_type<T> const &scalar) -> container_type<T>
+auto algb::libr::Oprt::increment(container_type<T> &scalar) -> container_type<T>
 {
   if (scalar.size() != 1)
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
   return container_type<T>{++scalar.at(0)};
@@ -173,24 +177,24 @@ auto algb::libr::Oprt::sub(container_type<T> const &left, container_type<T> cons
 {
   if (left.size() != right.size())
   {
-    throw std::invalid_argument("Invalid argument");
+    throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
   container_type<T> result;
-  for (int i = 0; i < left.size(); ++i)
+  for (size_t i = 0; i < left.size(); ++i)
   {
-    result.push_back(left.at(i) - left.at(i));
+    result.push_back(left.at(i) - right.at(i));
   }
 
   return result;
 }
 
 template <class T>
-auto algb::libr::Oprt::decrement(container_type<T> const &scalar) -> container_type<T>
+auto algb::libr::Oprt::decrement(container_type<T> &scalar) -> container_type<T>
 {
   if (scalar.size() != 1)
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
   return container_type<T>{--scalar.at(0)};
@@ -199,12 +203,7 @@ auto algb::libr::Oprt::decrement(container_type<T> const &scalar) -> container_t
 template <class T>
 auto algb::libr::Oprt::norm(container_type<T> const &vect) -> container_type<T>
 {
-  T temp = 0;
-  for (T element : vect)
-  {
-    temp += pow(element, 2);
-  }
-  return container_type<T>{temp};
+  return container_type<T>{sqrtf(dotProduct(vect, vect).at(0))};
 }
 
 template <class T>
@@ -212,7 +211,7 @@ auto algb::libr::Oprt::multiplyByScalar(container_type<T> const &vect, container
 {
   if (scalar.size() != 1)
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
   container_type<T> result;
@@ -229,7 +228,7 @@ auto algb::libr::Oprt::divisionByScalar(container_type<T> const &vect, container
 {
   if (scalar.size() != 1)
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
   container_type<T> result;
@@ -250,5 +249,10 @@ auto algb::libr::Oprt::normalizeVector(container_type<T> const &vect) -> contain
 template <class T>
 auto algb::libr::Oprt::getAngleBetweenVectors(container_type<T> const &left, container_type<T> const &right) -> container_type<T>
 {
+  if (left.size() != right.size())
+  {
+    throw std::invalid_argument(DIFFERENT_DIMENSIONS);
+  }
+
   return container_type<T>{divisionByScalar(dotProduct(left, right), dotProduct(norm(left), norm(right)))};
 };
