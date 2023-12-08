@@ -19,8 +19,8 @@ int main(int argc, char **argv)
   using namespace algb::arch;
 
   std::vector<float> scalar{3};
-  std::vector<float> vector1{1, 2, 3};
-  std::vector<float> vector2{5, 2, 1};
+  std::vector<float> vector1{6, 2, 3};
+  std::vector<float> vector2{3, 4, 6};
 
   // test operations
   print(Oprt::dotProduct(vector1, vector2));
@@ -36,7 +36,6 @@ int main(int argc, char **argv)
   print(Oprt::divisionByScalar(vector1, scalar));
   print(Oprt::getAngleBetweenVectors(vector1, vector2));
 
-  std::cout << "Ok" << std::endl;
   system("pause");
   return 0;
 }

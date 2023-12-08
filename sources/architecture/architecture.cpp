@@ -47,7 +47,7 @@ auto algb::arch::Interpreter::dotProduct(
     lines_type const &lines) -> void
 {
   libr::container_type<value_type> v1, v2;
-  value_type val;
+  // value_type val;
 
   auto leftName = *lines.begin();
   auto rightName = *++lines.begin();

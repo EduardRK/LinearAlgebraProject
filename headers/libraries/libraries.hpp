@@ -254,5 +254,5 @@ auto algb::libr::Oprt::getAngleBetweenVectors(container_type<T> const &left, con
     throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
-  return container_type<T>{divisionByScalar(dotProduct(left, right), dotProduct(norm(left), norm(right)))};
+  return container_type<T>{acosf(divisionByScalar(dotProduct(left, right), dotProduct(norm(left), norm(right))).at(0))};
 };
