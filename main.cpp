@@ -18,12 +18,6 @@ int main(int argc, char **argv)
 {
   using namespace algb::arch;
 
-  std::string path = argv[0];
-  auto pos = path.find_last_of('\\');
-  path = path.substr(0, pos);
-  pos = path.find_last_of('\\');
-  path = path.substr(0, pos + 1);
-
   std::vector<float> scalar{3};
   std::vector<float> vector1{1, 2, 3};
   std::vector<float> vector2{5, 2, 1};
