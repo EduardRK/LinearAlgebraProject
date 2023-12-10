@@ -1,6 +1,6 @@
 #include "libraries.hpp"
 
-algb::libr::FileReader::FileReader(path_type path) : path{path}
+algb::libr::FileReader::FileReader(path_type const &path) : path{path}
 {
     this->input.open(path, std::ios::in);
 }
@@ -22,7 +22,7 @@ auto algb::libr::FileReader::read() -> lines_type
     return result;
 }
 
-algb::libr::FileWriter::FileWriter(path_type path) : path{path}
+algb::libr::FileWriter::FileWriter(path_type const &path) : path{path}
 {
     this->out.open(path, std::ios::app);
 }
@@ -32,7 +32,7 @@ algb::libr::FileWriter::~FileWriter()
     this->out.close();
 }
 
-auto algb::libr::FileWriter::write(line_type line) -> bool
+auto algb::libr::FileWriter::write(line_type const &line) -> bool_type
 {
     if (out.fail())
     {
@@ -75,7 +75,7 @@ algb::libr::TerminalWriter::~TerminalWriter()
 {
 }
 
-auto algb::libr::TerminalWriter::write(line_type line) -> bool
+auto algb::libr::TerminalWriter::write(line_type const &line) -> bool_type
 {
     if (line.empty())
     {
@@ -84,4 +84,34 @@ auto algb::libr::TerminalWriter::write(line_type line) -> bool
 
     std::cout << line << std::endl;
     return true;
+}
+
+algb::libr::Parser::Parser(char_type const &separator) : separator{separator}
+{
+}
+
+algb::libr::Parser::~Parser()
+{
+}
+
+auto algb::libr::Parser::parse(line_type const &line) -> lines_type
+{
+    line_type temp = "";
+    lines_type result;
+
+    const char_type *lineChars = line.c_str();
+    for (std::size_t i = 0; i < line.size(); ++i)
+    {
+        if (lineChars[i] != separator)
+        {
+            temp += lineChars[i];
+        }
+        else
+        {
+            result.push_back(temp);
+            temp = "";
+        }
+    }
+
+    return result;
 }

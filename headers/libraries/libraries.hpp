@@ -14,6 +14,7 @@ namespace algb
     using char_type = char;
     using value_type = float;
     using message_type = char[];
+    using bool_type = bool;
     using path_type = std::string;
     using line_type = std::string;
     using lines_type = std::vector<std::string>;
@@ -21,14 +22,16 @@ namespace algb
     template <class T>
     using container_type = std::vector<T>;
 
-    class Pars
+    class Parser
     {
     private:
-      Pars();
-      ~Pars();
+      const char_type separator;
 
     public:
-      static auto parse(line_type const &line, char_type separator) -> lines_type;
+      Parser(char_type const &separator);
+      ~Parser();
+
+      auto parse(line_type const &line) -> lines_type;
     };
 
     class Oprt
@@ -86,7 +89,7 @@ namespace algb
       std::ifstream input;
 
     public:
-      FileReader(path_type path);
+      FileReader(path_type const &path);
       ~FileReader();
 
       auto read() -> lines_type;
@@ -99,10 +102,10 @@ namespace algb
       std::ofstream out;
 
     public:
-      FileWriter(path_type path);
+      FileWriter(path_type const &path);
       ~FileWriter();
 
-      auto write(line_type line) -> bool;
+      auto write(line_type const &line) -> bool_type;
     };
 
     class TerminalReader
@@ -123,7 +126,7 @@ namespace algb
       TerminalWriter();
       ~TerminalWriter();
 
-      auto write(line_type line) -> bool;
+      auto write(line_type const &line) -> bool_type;
     };
   }
 }
