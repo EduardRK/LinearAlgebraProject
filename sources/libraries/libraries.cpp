@@ -42,3 +42,46 @@ auto algb::libr::FileWriter::write(line_type line) -> bool
     out << line << std::endl;
     return true;
 }
+
+algb::libr::TerminalReader::TerminalReader()
+{
+}
+
+algb::libr::TerminalReader::~TerminalReader()
+{
+}
+
+auto algb::libr::TerminalReader::read() -> lines_type
+{
+    lines_type result;
+    line_type temp;
+    while (std::getline(std::cin, temp))
+    {
+        if (temp == END_MESSAGE)
+        {
+            break;
+        }
+
+        result.push_back(temp);
+    }
+    return result;
+}
+
+algb::libr::TerminalWriter::TerminalWriter()
+{
+}
+
+algb::libr::TerminalWriter::~TerminalWriter()
+{
+}
+
+auto algb::libr::TerminalWriter::write(line_type line) -> bool
+{
+    if (line.empty())
+    {
+        return false;
+    }
+
+    std::cout << line << std::endl;
+    return true;
+}
