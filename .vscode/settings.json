@@ -2,4 +2,7 @@
     "cmake.debugConfig": {
         "externalConsole": true
     },
+    "files.associations": {
+        "stdexcept": "cpp"
+    },
 }

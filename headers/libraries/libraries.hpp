@@ -4,6 +4,7 @@
 #include <vector> // std::vector
 #include <stdexcept>
 #include <cmath>
+#include <iostream>
 
 namespace algb
 {
@@ -87,15 +88,25 @@ namespace algb
       auto write(line_type &line, line_type &path) -> void;
     };
 
-    class Trmn
+    class TerminalReader
     {
     private:
-      Trmn();
-      ~Trmn();
+      static constexpr message_type END_MESSAGE = "end";
 
     public:
-      auto read(line_type &line) -> void;
-      auto write(line_type &line) -> void;
+      TerminalReader();
+      ~TerminalReader();
+
+      auto readAllLines() -> lines_type;
+    };
+
+    class TerminalWriter
+    {
+    public:
+      TerminalWriter();
+      ~TerminalWriter();
+
+      auto write(line_type line) -> bool;
     };
   }
 }
