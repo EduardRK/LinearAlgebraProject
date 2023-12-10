@@ -14,6 +14,15 @@ void print(std::vector<float> vect)
   std::cout << std::endl;
 }
 
+void print(std::vector<std::string> vect)
+{
+  for (std::string &element : vect)
+  {
+    std::cout << element << " ";
+  }
+  std::cout << std::endl;
+}
+
 int main(int argc, char **argv)
 {
   using namespace algb::arch;

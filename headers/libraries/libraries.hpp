@@ -4,6 +4,8 @@
 #include <vector> // std::vector
 #include <stdexcept>
 #include <cmath>
+#include <fstream>
+#include <iostream>
 
 namespace algb
 {
@@ -12,6 +14,7 @@ namespace algb
     using char_type = char;
     using value_type = float;
     using message_type = char[];
+    using path_type = std::string;
     using line_type = std::string;
     using lines_type = std::vector<std::string>;
 
@@ -76,26 +79,48 @@ namespace algb
       static auto getAngleBetweenVectors(container_type<T> const &left, container_type<T> const &right) -> container_type<T>;
     };
 
-    class File
+    class FileReader
     {
     private:
-      File();
-      ~File();
+      const path_type path;
+      std::ifstream input;
 
     public:
-      auto read(line_type &path) -> lines_type;
-      auto write(line_type &line, line_type &path) -> void;
+      FileReader(path_type path);
+      ~FileReader();
+
+      auto read() -> lines_type;
     };
 
-    class Trmn
+    class FileWriter
     {
     private:
-      Trmn();
-      ~Trmn();
+      const path_type path;
+      std::ofstream out;
 
     public:
-      auto read(line_type &line) -> void;
-      auto write(line_type &line) -> void;
+      FileWriter(path_type path);
+      ~FileWriter();
+
+      auto write(line_type line) -> bool;
+    };
+
+    class TerminalReader
+    {
+    public:
+      TerminalReader();
+      ~TerminalReader();
+
+      auto read() -> line_type;
+    };
+
+    class TerminalWriter
+    {
+    public:
+      TerminalWriter();
+      ~TerminalWriter();
+
+      auto write(line_type line) -> bool;
     };
   }
 }
