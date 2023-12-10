@@ -107,11 +107,14 @@ namespace algb
 
     class TerminalReader
     {
+    private:
+      static constexpr message_type END_MESSAGE = "end";
+
     public:
       TerminalReader();
       ~TerminalReader();
 
-      auto read() -> line_type;
+      auto read() -> lines_type;
     };
 
     class TerminalWriter
