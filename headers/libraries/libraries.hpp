@@ -206,7 +206,8 @@ auto algb::libr::Oprt::increment(container_type<T> &scalar) -> container_type<T>
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  return container_type<T>{++scalar.at(0)};
+  ++scalar.at(0);
+  return scalar;
 }
 
 template <class T>
@@ -234,7 +235,8 @@ auto algb::libr::Oprt::decrement(container_type<T> &scalar) -> container_type<T>
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  return container_type<T>{--scalar.at(0)};
+  --scalar.at(0);
+  return scalar;
 }
 
 template <class T>
