@@ -106,6 +106,9 @@ namespace algb
       ~FileWriter();
 
       auto write(line_type const &line) -> bool_type;
+      auto write(lines_type const &lines) -> bool_type;
+      template <class T>
+      auto write(container_type<T> const &vect) -> bool_type;
     };
 
     class TerminalReader
@@ -127,6 +130,9 @@ namespace algb
       ~TerminalWriter();
 
       auto write(line_type const &line) -> bool_type;
+      auto write(lines_type const &lines) -> bool_type;
+      template <class T>
+      auto write(container_type<T> const &vect) -> bool_type;
     };
   }
 }

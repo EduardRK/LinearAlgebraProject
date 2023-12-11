@@ -24,7 +24,7 @@ auto algb::libr::FileReader::read() -> lines_type
 
 algb::libr::FileWriter::FileWriter(path_type const &path) : path{path}
 {
-    this->out.open(path, std::ios::app);
+    this->out.open(path, std::ios::out);
 }
 
 algb::libr::FileWriter::~FileWriter()
@@ -40,6 +40,37 @@ auto algb::libr::FileWriter::write(line_type const &line) -> bool_type
     }
 
     out << line << std::endl;
+    return true;
+}
+
+auto algb::libr::FileWriter::write(lines_type const &lines) -> bool_type
+{
+    if (out.fail())
+    {
+        return false;
+    }
+
+    for (line_type line : lines)
+    {
+        out << line << " ";
+    }
+    out << std::endl;
+    return true;
+}
+
+template <class T>
+auto algb::libr::FileWriter::write(container_type<T> const &vect) -> bool_type
+{
+    if (out.fail())
+    {
+        return false;
+    }
+
+    for (T element : vect)
+    {
+        out << element << " ";
+    }
+    out << std::endl;
     return true;
 }
 
@@ -86,6 +117,37 @@ auto algb::libr::TerminalWriter::write(line_type const &line) -> bool_type
     return true;
 }
 
+auto algb::libr::TerminalWriter::write(lines_type const &lines) -> bool_type
+{
+    if (lines.empty())
+    {
+        return false;
+    }
+
+    for (line_type line : lines)
+    {
+        std::cout << line << " ";
+    }
+    std::cout << std::endl;
+    return true;
+}
+
+template<class T>
+auto algb::libr::TerminalWriter::write(container_type<T> const &vect) -> bool_type
+{
+    if (vect.empty())
+    {
+        return false;
+    }
+
+   for (T element : vect)
+    {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+    return true;
+}
+
 algb::libr::Parser::Parser(char_type const &separator) : separator{separator}
 {
 }
@@ -111,6 +173,11 @@ auto algb::libr::Parser::parse(line_type const &line) -> lines_type
             result.push_back(temp);
             temp = "";
         }
+    }
+
+    if (!temp.empty())
+    {
+        result.push_back(temp);
     }
 
     return result;
