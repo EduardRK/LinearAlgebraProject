@@ -38,7 +38,7 @@ auto algb::arch::Interpreter::setVariable(lines_type const &lines) -> void
 {
   auto name = lines.front();
   auto value = lines_type(++lines.begin(), lines.end());
-  this->database_.setVariable(name, value);
+  // this->database_.setVariable(name, value);
 }
 
 auto algb::arch::Interpreter::dotProduct(
@@ -51,8 +51,8 @@ auto algb::arch::Interpreter::dotProduct(
   auto rightName = *++lines.begin();
   auto newName = *++lines.begin();
 
-  this->database_.getVariable(v1, leftName);
-  this->database_.getVariable(v2, rightName);
+  // this->database_.getVariable(v1, leftName);
+  // this->database_.getVariable(v2, rightName);
 
   // val = libr::dotProduct(v1, v2);
   // this->database_.setVariable(newName, );

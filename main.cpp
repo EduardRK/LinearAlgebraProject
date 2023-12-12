@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <optional>
 
 #include "architecture.hpp"
 #include "variables.hpp"
@@ -9,25 +10,22 @@
 using namespace algb::libr;
 using namespace algb::vrbl;
 
+std::optional<int *> intConv(const lines_type &vars)
+{
+  ;
+  return std::optional(new int(42));
+}
+
+std::optional<std::string *> stringConv(const lines_type &vars)
+{
+  return std::optional(new std::string("0420"));
+}
+
 int main(int argc, char **argv)
 {
   using namespace algb::arch;
+  algb::vrbl::Database<int, std::string> db(intConv, stringConv);
 
-  Database<std::string, std::vector<double>> db;
-  db.setVariable("b", std::vector<std::string>());
-
-  std::vector<float> f;
-
-  try
-  {
-    db.getVariable(f, "b");
-  }
-  catch (const std::invalid_argument &e)
-  {
-    std::cout << e.what();
-  }
-
-  std::cout << f.at(1);
 
   system("pause");
   return 0;

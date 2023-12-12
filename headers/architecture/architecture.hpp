@@ -34,7 +34,7 @@ namespace algb
       char_type const separator_;
       file_strm_type ifs_;
 
-      vrbl::Database<int, float, std::vector<int>> database_;
+      // vrbl::Database<int, float, std::vector<int>> database_();
 
       std::map<line_type, void (Interpreter::*)(lines_type const &)> commands_;
 
