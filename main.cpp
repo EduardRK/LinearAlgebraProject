@@ -1,49 +1,33 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <map>
 
 #include "architecture.hpp"
+#include "variables.hpp"
 
 using namespace algb::libr;
-
-void print(std::vector<float> vect)
-{
-  for (float &element : vect)
-  {
-    std::cout << element << " ";
-  }
-  std::cout << std::endl;
-}
-
-void print(std::vector<std::string> vect)
-{
-  for (std::string &element : vect)
-  {
-    std::cout << element << " ";
-  }
-  std::cout << std::endl;
-}
+using namespace algb::vrbl;
 
 int main(int argc, char **argv)
 {
   using namespace algb::arch;
 
-  std::vector<float> scalar{3};
-  std::vector<float> vector1{6, 2, 3};
-  std::vector<float> vector2{3, 4, 6};
+  Database<std::string, std::vector<double>> db;
+  db.setVariable("b", std::vector<std::string>());
 
-  // test operations
-  print(Oprt::dotProduct(vector1, vector2));
-  print(Oprt::crossProduct(vector1, vector2));
-  print(Oprt::sum(vector1, vector2));
-  print(Oprt::sub(vector1, vector2));
-  print(Oprt::norm(vector1));
-  print(Oprt::normalizeVector(vector1));
-  print(Oprt::increment(scalar));
-  print(Oprt::decrement(scalar));
-  print(Oprt::pow(scalar, scalar));
-  print(Oprt::multiplyByScalar(vector2, scalar));
-  print(Oprt::divisionByScalar(vector1, scalar));
-  print(Oprt::getAngleBetweenVectors(vector1, vector2));
+  std::vector<float> f;
+
+  try
+  {
+    db.getVariable(f, "b");
+  }
+  catch (const std::invalid_argument &e)
+  {
+    std::cout << e.what();
+  }
+
+  std::cout << f.at(1);
 
   system("pause");
   return 0;

@@ -4,12 +4,10 @@
 #include "architecture.hpp"
 #include "libraries.hpp"
 
-algb::arch::Interpreter::Interpreter(line_type const &logPath, char_type sep) : 
-  logPath_(logPath), separator_(sep), 
-  commands_{ 
-    {"SET", &algb::arch::Interpreter::setVariable},
-    {"DOT", &algb::arch::Interpreter::dotProduct}
-  }
+algb::arch::Interpreter::Interpreter(line_type const &logPath, char_type sep) : logPath_(logPath), separator_(sep),
+                                                                                commands_{
+                                                                                    {"SET", &algb::arch::Interpreter::setVariable},
+                                                                                    {"DOT", &algb::arch::Interpreter::dotProduct}}
 {
   ifs_.open(this->logPath_);
   if (!ifs_.is_open())
@@ -57,5 +55,5 @@ auto algb::arch::Interpreter::dotProduct(
   this->database_.getVariable(v2, rightName);
 
   // val = libr::dotProduct(v1, v2);
-  //this->database_.setVariable(newName, );
+  // this->database_.setVariable(newName, );
 }
