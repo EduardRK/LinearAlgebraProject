@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 
 #include "Writer.hpp"
 
@@ -9,6 +10,11 @@ algb::libr::Writer::~Writer()
 algb::libr::FileWriter::FileWriter(path_type const &path) : path{path}
 {
     this->out.open(path, std::ios::out);
+
+    if (!out.is_open())
+    {
+        throw std::invalid_argument("Wrong path");
+    }
 }
 
 algb::libr::FileWriter::~FileWriter()
@@ -16,29 +22,17 @@ algb::libr::FileWriter::~FileWriter()
     this->out.close();
 }
 
-auto algb::libr::FileWriter::write(line_type const &line) -> bool_type const
+auto algb::libr::FileWriter::write(line_type const &line) -> void const
 {
-    if (out.fail())
-    {
-        return false;
-    }
-
     out << line << std::endl;
-    return true;
 }
 
-auto algb::libr::FileWriter::write(lines_type const &lines) -> bool_type const
+auto algb::libr::FileWriter::write(lines_type const &lines) -> void const
 {
-    if (out.fail())
-    {
-        return false;
-    }
-
     for (line_type line : lines)
     {
-        out << line << std::endl;
+        write(line);
     }
-    return true;
 }
 
 algb::libr::TerminalWriter::TerminalWriter()
@@ -49,27 +43,15 @@ algb::libr::TerminalWriter::~TerminalWriter()
 {
 }
 
-auto algb::libr::TerminalWriter::write(line_type const &line) -> bool_type const
+auto algb::libr::TerminalWriter::write(line_type const &line) -> void const
 {
-    if (line.empty())
-    {
-        return false;
-    }
-
     std::cout << line << std::endl;
-    return true;
 }
 
-auto algb::libr::TerminalWriter::write(lines_type const &lines) -> bool_type const
+auto algb::libr::TerminalWriter::write(lines_type const &lines) -> void const
 {
-    if (lines.empty())
-    {
-        return false;
-    }
-
     for (line_type line : lines)
     {
-        std::cout << line << std::endl;
+        write(line);
     }
-    return true;
 }
