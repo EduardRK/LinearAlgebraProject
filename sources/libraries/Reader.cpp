@@ -13,7 +13,7 @@ algb::libr::FileReader::FileReader(path_type const &path) : path{path}
 
     if (!input.is_open())
     {
-        throw std::invalid_argument("Wrong path");
+        throw std::invalid_argument(WRONG_PATH);
     }
 }
 

@@ -22,6 +22,8 @@ namespace algb
         class FileWriter : public Writer
         {
         private:
+            static constexpr message_type WRONG_PATH = "Wrong path";
+
             const path_type path;
             std::ofstream out;
 
