@@ -13,8 +13,8 @@ namespace algb
   {
     using char_type = char;
     using value_type = float;
-    using message_type = char[];
     using bool_type = bool;
+    using message_type = char[];
     using path_type = std::string;
     using line_type = std::string;
     using lines_type = std::vector<std::string>;
@@ -85,36 +85,37 @@ namespace algb
     class FileReader
     {
     private:
-      const path_type path; // путь к файлу
-      std::ifstream input; // поток чтения
+      const path_type path; 
+      std::ifstream input; 
 
     public:
-      FileReader(path_type const &path); // конструктор иницилизирует путь и открывает поток чтения
-      ~FileReader(); // закрывает поток чтения 
+      FileReader(path_type const &path); 
+      ~FileReader(); 
 
-      auto read() -> lines_type; // считывает все строки в std::vector
+      auto read() -> lines_type; 
     };
 
     class FileWriter
     {
     private:
       const path_type path;
-      std::ofstream out; // поток записи
+      std::ofstream out; 
 
     public:
       FileWriter(path_type const &path);
       ~FileWriter();
 
-      auto write(line_type const &line) -> bool_type; // записывает строку
-      auto write(lines_type const &lines) -> bool_type; // записывает вектор строк
+      auto write(line_type const &line) -> bool_type; 
+      auto write(lines_type const &lines) -> bool_type; 
+
       template <class T>
-      auto write(container_type<T> const &vect) -> bool_type; // записывает веткор
+      auto write(container_type<T> const &vect) -> bool_type; 
     };
 
     class TerminalReader
     {
     private:
-      static constexpr message_type END_MESSAGE = "end"; // Константа для прекращения чтения из терминала. Constexpr - то что константа.
+      static constexpr message_type END_MESSAGE = "end"; 
 
     public:
       TerminalReader();
@@ -131,6 +132,7 @@ namespace algb
 
       auto write(line_type const &line) -> bool_type;
       auto write(lines_type const &lines) -> bool_type;
+      
       template <class T>
       auto write(container_type<T> const &vect) -> bool_type;
     };

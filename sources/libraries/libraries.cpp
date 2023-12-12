@@ -1,6 +1,5 @@
 #include "libraries.hpp"
 
-// const& для передачи по ссылке. Чтобы не копировать значение. Const чтобы не измениь значение
 algb::libr::FileReader::FileReader(path_type const &path) : path{path}
 {
     this->input.open(path, std::ios::in);
@@ -13,9 +12,9 @@ algb::libr::FileReader::~FileReader()
 
 auto algb::libr::FileReader::read() -> lines_type
 {
-    lines_type result;                // ветор, в котором собираются все строки из файла
-    line_type temp;                   // временная строка
-    while (std::getline(input, temp)) // считывает строки, пока они есть из инпута в temp string
+    lines_type result;                
+    line_type temp;                   
+    while (std::getline(input, temp))
     {
         result.push_back(temp);
     }
@@ -25,22 +24,22 @@ auto algb::libr::FileReader::read() -> lines_type
 
 algb::libr::FileWriter::FileWriter(path_type const &path) : path{path}
 {
-    this->out.open(path, std::ios::out); // открывает поток на запись
+    this->out.open(path, std::ios::out); 
 }
 
 algb::libr::FileWriter::~FileWriter()
 {
-    this->out.close(); // закрывает поток на запись
+    this->out.close(); 
 }
 
 auto algb::libr::FileWriter::write(line_type const &line) -> bool_type
 {
-    if (out.fail()) // если ошибка соединения с файлом, то не запишет и вернет false
+    if (out.fail()) 
     {
         return false;
     }
 
-    out << line << std::endl; // записывает в файла и возвращает тру
+    out << line << std::endl; 
     return true;
 }
 
@@ -51,9 +50,9 @@ auto algb::libr::FileWriter::write(lines_type const &lines) -> bool_type
         return false;
     }
 
-    for (line_type line : lines) // записывает каждую строчку из вектора строк
+    for (line_type line : lines) 
     {
-        out << line << std::endl; // записывает line в файл
+        out << line << std::endl; 
     }
     return true;
 }
@@ -108,7 +107,7 @@ algb::libr::TerminalWriter::~TerminalWriter()
 
 auto algb::libr::TerminalWriter::write(line_type const &line) -> bool_type
 {
-    if (line.empty()) // если строка пуста
+    if (line.empty()) 
     {
         return false;
     }
@@ -119,7 +118,7 @@ auto algb::libr::TerminalWriter::write(line_type const &line) -> bool_type
 
 auto algb::libr::TerminalWriter::write(lines_type const &lines) -> bool_type
 {
-    if (lines.empty()) // если массив пустой
+    if (lines.empty()) 
     {
         return false;
     }
@@ -134,7 +133,7 @@ auto algb::libr::TerminalWriter::write(lines_type const &lines) -> bool_type
 template <class T>
 auto algb::libr::TerminalWriter::write(container_type<T> const &vect) -> bool_type
 {
-    if (vect.empty()) // если массив пусто
+    if (vect.empty())
     {
         return false;
     }
