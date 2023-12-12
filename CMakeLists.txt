@@ -19,18 +19,26 @@ include_directories(${HDRS}/${LIBR})
 include_directories(${HDRS}/${VRBL})
 
 set(ARCH_ ${HDRS}/${ARCH}/architecture.hpp ${SRCS}/${ARCH}/architecture.cpp)
-set(LIBR_ ${HDRS}/${LIBR}/libraries.hpp ${SRCS}/${LIBR}/libraries.cpp)
+set(WRITE_ ${HDRS}/${LIBR}/Writer.hpp ${SRCS}/${LIBR}/Writer.cpp)
+set(READ_ ${HDRS}/${LIBR}/Reader.hpp ${SRCS}/${LIBR}/Reader.cpp)
+set(PARSER_ ${HDRS}/${LIBR}/Parser.hpp ${SRCS}/${LIBR}/Parser.cpp)
 set(VRBL_ ${HDRS}/${VRBL}/variables.hpp ${SRCS}/${VRBL}/variables.cpp)
 
 add_library(arch_lib STATIC ${ARCH_})
-add_library(libr_lib STATIC ${LIBR_})
+add_library(write_lib STATIC ${WRITE_})
+add_library(read_lib STATIC ${READ_})
+add_library(parser_lib STATIC ${PARSER_})
 add_library(vrbl_lib STATIC ${VRBL_})
 
 add_executable(${PROJECT_NAME} main.cpp)
 
 # .hpp -> INTERFACE, .cpp -> PRIVATE, .hpp & .cpp -> PUBLIC
-target_link_libraries(arch_lib PUBLIC libr_lib)
+target_link_libraries(arch_lib PUBLIC write_lib)
+target_link_libraries(arch_lib PUBLIC read_lib)
+target_link_libraries(arch_lib PUBLIC parser_lib)
 target_link_libraries(arch_lib INTERFACE vrbl_lib)
-target_link_libraries(vrbl_lib INTERFACE libr_lib)
+target_link_libraries(vrbl_lib INTERFACE write_lib)
+target_link_libraries(vrbl_lib INTERFACE read_lib)
+target_link_libraries(vrbl_lib INTERFACE parser_lib)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE arch_lib)

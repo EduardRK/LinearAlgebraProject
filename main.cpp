@@ -2,6 +2,10 @@
 #include <string>
 
 #include "architecture.hpp"
+#include "Writer.hpp"
+#include "Reader.hpp"
+#include "Parser.hpp"
+#include "Operations.hpp"
 
 using namespace algb::libr;
 
@@ -18,7 +22,7 @@ void print(std::vector<std::string> vect)
 {
   for (std::string &element : vect)
   {
-    std::cout << element << " ";
+    std::cout << element << std::endl;
   }
   std::cout << std::endl;
 }
@@ -28,7 +32,7 @@ int main(int argc, char **argv)
   using namespace algb::arch;
 
   std::vector<float> scalar{3};
-  std::vector<float> vector1{6, 2, 3};
+  std::vector<float> vector1{9, 2, 3};
   std::vector<float> vector2{3, 4, 6};
 
   // test operations

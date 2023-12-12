@@ -2,7 +2,10 @@
 #include <string>    // std::getline
 
 #include "architecture.hpp"
-#include "libraries.hpp"
+#include "Writer.hpp"
+#include "Reader.hpp"
+#include "Parser.hpp"
+#include "Operations.hpp"
 
 algb::arch::Interpreter::Interpreter(line_type const &logPath, char_type sep) : 
   logPath_(logPath), separator_(sep), 

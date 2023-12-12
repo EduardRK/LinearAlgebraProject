@@ -3,7 +3,10 @@
 #include <fstream> // std::ifstream
 #include <map>     // std::map
 
-#include "libraries.hpp"
+#include "Reader.hpp"
+#include "Writer.hpp"
+#include "Parser.hpp"
+#include "Operations.hpp"
 #include "variables.hpp"
 
 namespace algb
