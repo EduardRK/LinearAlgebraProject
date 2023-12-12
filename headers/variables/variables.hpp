@@ -16,11 +16,6 @@ namespace algb
       std::string type_id;
     };
 
-    // vector<float>
-    // string
-    // vector<string> -> vector<float> or string
-    // struct variable{void* val, type id}
-    // map<string, vrbl>
     template <class... Ts>
     class Database
     {
@@ -33,9 +28,6 @@ namespace algb
 
       const line_type TYPES_ERROR = "TYPES DON'T MATCH";
       const line_type NAME_ERROR = "STORE DOESN'T CONTAIN VARIABLE WITH PASSED NAME";
-
-      // template <class T>
-      // T getValue(line_type const &name);
 
       auto setVariable(
           line_type const &name,
