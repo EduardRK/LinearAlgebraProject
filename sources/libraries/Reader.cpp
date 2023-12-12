@@ -2,6 +2,10 @@
 
 #include "Reader.hpp"
 
+algb::libr::Reader::~Reader()
+{
+}
+
 algb::libr::FileReader::FileReader(path_type const &path) : path{path}
 {
     this->input.open(path, std::ios::in);

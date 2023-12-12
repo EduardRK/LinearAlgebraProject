@@ -2,6 +2,10 @@
 
 #include "Writer.hpp"
 
+algb::libr::Writer::~Writer()
+{
+}
+
 algb::libr::FileWriter::FileWriter(path_type const &path) : path{path}
 {
     this->out.open(path, std::ios::out);

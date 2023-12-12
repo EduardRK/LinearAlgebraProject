@@ -13,6 +13,8 @@ namespace algb
         class Reader
         {
         public:
+            virtual ~Reader();
+
             virtual auto read() -> lines_type const = 0;
         };
 

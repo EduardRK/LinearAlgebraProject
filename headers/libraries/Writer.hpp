@@ -13,6 +13,8 @@ namespace algb
         class Writer
         {
         public:
+            virtual ~Writer();
+
             virtual auto write(line_type const &line) -> bool_type const = 0;
             virtual auto write(lines_type const &lines) -> bool_type const = 0;
         };
