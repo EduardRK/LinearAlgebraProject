@@ -85,36 +85,36 @@ namespace algb
     class FileReader
     {
     private:
-      const path_type path;
-      std::ifstream input;
+      const path_type path; // путь к файлу
+      std::ifstream input; // поток чтения
 
     public:
-      FileReader(path_type const &path);
-      ~FileReader();
+      FileReader(path_type const &path); // конструктор иницилизирует путь и открывает поток чтения
+      ~FileReader(); // закрывает поток чтения 
 
-      auto read() -> lines_type;
+      auto read() -> lines_type; // считывает все строки в std::vector
     };
 
     class FileWriter
     {
     private:
       const path_type path;
-      std::ofstream out;
+      std::ofstream out; // поток записи
 
     public:
       FileWriter(path_type const &path);
       ~FileWriter();
 
-      auto write(line_type const &line) -> bool_type;
-      auto write(lines_type const &lines) -> bool_type;
+      auto write(line_type const &line) -> bool_type; // записывает строку
+      auto write(lines_type const &lines) -> bool_type; // записывает вектор строк
       template <class T>
-      auto write(container_type<T> const &vect) -> bool_type;
+      auto write(container_type<T> const &vect) -> bool_type; // записывает веткор
     };
 
     class TerminalReader
     {
     private:
-      static constexpr message_type END_MESSAGE = "end";
+      static constexpr message_type END_MESSAGE = "end"; // Константа для прекращения чтения из терминала. Constexpr - то что константа.
 
     public:
       TerminalReader();

@@ -3,6 +3,7 @@
         "externalConsole": true
     },
     "files.associations": {
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "string": "cpp"
     },
 }
