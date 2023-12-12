@@ -29,21 +29,31 @@ algb::arch::Interpreter::~Interpreter()
   delete this->parser;
 }
 
-auto algb::arch::Interpreter::readCommand() -> void
+auto algb::arch::Interpreter::readLog() -> lines_type
 {
-  line_type line;   // "set x 42"
-  lines_type lines; // {"set", "x", "42"}
-
-  // std::getline(this->ifs_, line);
-  // lines = libr::parse(line, this->separator_);
+  return reader->read();
 }
 
-auto algb::arch::Interpreter::interpret(lines_type const &cmd) -> void
+auto algb::arch::Interpreter::interpret(lines_type const &commands) -> void
 {
-  auto key = cmd.front();
-  auto oth = lines_type(++cmd.begin(), cmd.end());
-  (this->*this->commands_.at(key))(oth); // throw
+  for (line_type command : commands)
+  {
+    /*
+      this
+      parse command
+      setVariable
+      call functions
+      writer.write()
+    */
+  }
 }
+
+// auto algb::arch::Interpreter::interpret(lines_type const &cmd) -> void
+// {
+//   auto key = cmd.front();
+//   auto oth = lines_type(++cmd.begin(), cmd.end());
+//   (this->*this->commands_.at(key))(oth); // throw
+// }
 
 auto algb::arch::Interpreter::setVariable(lines_type const &lines) -> void
 {
@@ -52,8 +62,7 @@ auto algb::arch::Interpreter::setVariable(lines_type const &lines) -> void
   this->database_.setVariable(name, value);
 }
 
-auto algb::arch::Interpreter::dotProduct(
-    lines_type const &lines) -> void
+auto algb::arch::Interpreter::dotProduct(lines_type const &lines) -> void
 {
   libr::container_type<value_type> v1, v2;
   // value_type val;
