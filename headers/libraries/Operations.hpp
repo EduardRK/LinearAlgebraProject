@@ -13,7 +13,7 @@ namespace algb
 {
   namespace libr
   {
-    class Oprt
+    class Oprt final
     {
     private:
       Oprt();
