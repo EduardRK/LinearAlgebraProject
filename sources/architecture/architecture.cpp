@@ -7,28 +7,34 @@
 #include "Parser.hpp"
 #include "Operations.hpp"
 
-algb::arch::Interpreter::Interpreter(line_type const &logPath, char_type sep) : 
-  logPath_(logPath), separator_(sep), 
-  commands_{ 
-    {"SET", &algb::arch::Interpreter::setVariable},
-    {"DOT", &algb::arch::Interpreter::dotProduct}
-  }
+algb::arch::Interpreter::Interpreter(line_type const &logPath, char_type separator) : commands_{
+                                                                                          {"SET", &algb::arch::Interpreter::setVariable},
+                                                                                          {"DOT", &algb::arch::Interpreter::dotProduct}}
 {
-  ifs_.open(this->logPath_);
-  if (!ifs_.is_open())
-  {
-    throw std::runtime_error("wrong path: " + this->logPath_);
-  }
+  this->reader = new libr::FileReader(logPath);
+  this->writer = new libr::FileWriter(logPath);
+  this->parser = new libr::Parser(separator);
 }
 
-algb::arch::Interpreter::~Interpreter() {}
+algb::arch::Interpreter::Interpreter(char_type separator)
+{
+  this->reader = new libr::TerminalReader();
+  this->writer = new libr::TerminalWriter();
+  this->parser = new libr::Parser(separator);
+}
+algb::arch::Interpreter::~Interpreter()
+{
+  delete this->reader;
+  delete this->writer;
+  delete this->parser;
+}
 
 auto algb::arch::Interpreter::readCommand() -> void
 {
   line_type line;   // "set x 42"
   lines_type lines; // {"set", "x", "42"}
 
-  std::getline(this->ifs_, line);
+  // std::getline(this->ifs_, line);
   // lines = libr::parse(line, this->separator_);
 }
 
@@ -60,5 +66,5 @@ auto algb::arch::Interpreter::dotProduct(
   this->database_.getVariable(v2, rightName);
 
   // val = libr::dotProduct(v1, v2);
-  //this->database_.setVariable(newName, );
+  // this->database_.setVariable(newName, );
 }
