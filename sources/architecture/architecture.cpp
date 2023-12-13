@@ -7,21 +7,35 @@
 #include "Parser.hpp"
 #include "Operations.hpp"
 
-algb::arch::Interpreter::Interpreter(line_type const &logPath, char_type separator) : commands_{
-                                                                                          {"SET", &algb::arch::Interpreter::setVariable},
-                                                                                          {"DOT", &algb::arch::Interpreter::dotProduct}}
+algb::arch::Interpreter::Interpreter(line_type const &logPath)
 {
-  this->reader = new libr::FileReader(logPath);
-  this->writer = new libr::FileWriter(logPath);
-  this->parser = new libr::Parser(separator);
+  Interpreter(logPath, DEFAULT_SEPARATOR);
 }
 
-algb::arch::Interpreter::Interpreter(char_type separator)
+algb::arch::Interpreter::Interpreter(line_type const &logPath, const char_type separator)
 {
-  this->reader = new libr::TerminalReader();
-  this->writer = new libr::TerminalWriter();
-  this->parser = new libr::Parser(separator);
+  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(logPath), new libr::Parser(separator));
 }
+
+algb::arch::Interpreter::Interpreter()
+{
+  Interpreter{DEFAULT_SEPARATOR};
+}
+
+algb::arch::Interpreter::Interpreter(const char_type separator)
+{
+  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::Parser(separator));
+}
+
+algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, parser_type *parser) : commands_{
+                                                                                                          {"SET", &algb::arch::Interpreter::setVariable},
+                                                                                                          {"DOT", &algb::arch::Interpreter::dotProduct}}
+{
+  this->reader = reader;
+  this->writer = writer;
+  this->parser = parser;
+}
+
 algb::arch::Interpreter::~Interpreter()
 {
   delete this->reader;

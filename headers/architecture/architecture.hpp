@@ -25,14 +25,19 @@ namespace algb
     class Interpreter
     {
     public:
-      Interpreter(line_type const &logPath, char_type separator);
-      Interpreter(char_type separator);
+      Interpreter(line_type const &logPath, const char_type separator);
+      Interpreter(line_type const &logPath);
+      Interpreter(const char_type separator);
+      Interpreter();
+
       ~Interpreter();
 
       auto readLog() -> lines_type;
       auto interpret(lines_type const &commands) -> void;
 
     private:
+      static constexpr char_type DEFAULT_SEPARATOR = ',';
+
       reader_type *reader;
       writer_type *writer;
       parser_type *parser;
@@ -40,6 +45,8 @@ namespace algb
       vrbl::Database<container_type, line_type> database_;
 
       std::map<line_type, void (Interpreter::*)(lines_type const &)> commands_;
+
+      Interpreter(reader_type *reader, writer_type *writer, parser_type *parser);
 
       auto setVariable(lines_type const &lines) -> void;
       auto dotProduct(lines_type const &lines) -> void;
