@@ -1,7 +1,7 @@
 #pragma once
 
-#include <fstream> // std::ifstream
-#include <map>     // std::map
+#include <fstream>       // std::ifstream
+#include <unordered_map> // std::unordered_map
 
 #include "Reader.hpp"
 #include "Writer.hpp"
@@ -36,7 +36,7 @@ namespace algb
       auto interpret(lines_type const &commands) -> void;
 
     private:
-      static constexpr char_type DEFAULT_SEPARATOR = ',';
+      static constexpr char_type DEFAULT_SEPARATOR = ' ';
 
       reader_type *reader;
       writer_type *writer;
@@ -44,7 +44,7 @@ namespace algb
 
       vrbl::Database<container_type, line_type> database_;
 
-      std::map<line_type, void (Interpreter::*)(lines_type const &)> commands_;
+      std::unordered_map<line_type, void (Interpreter::*)(lines_type const &)> commands_;
 
       Interpreter(reader_type *reader, writer_type *writer, parser_type *parser);
 
