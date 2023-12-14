@@ -54,6 +54,7 @@ algb::arch::Interpreter::~Interpreter()
   delete this->reader;
   delete this->writer;
   delete this->parser;
+  delete this->validator;
 }
 
 auto algb::arch::Interpreter::interpret() -> void
