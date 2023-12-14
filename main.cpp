@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "Validator.hpp"
 #include "architecture.hpp"
 #include "Writer.hpp"
 #include "Reader.hpp"
@@ -29,26 +30,6 @@ void print(std::vector<std::string> vect)
 
 int main(int argc, char **argv)
 {
-  using namespace algb::arch;
-
-  std::vector<float> scalar{3};
-  std::vector<float> vector1{9, 2, 3};
-  std::vector<float> vector2{3, 4, 6};
-
-  // test operations
-  print(Oprt::dotProduct(vector1, vector2));
-  print(Oprt::crossProduct(vector1, vector2));
-  print(Oprt::sum(vector1, vector2));
-  print(Oprt::sub(vector1, vector2));
-  print(Oprt::norm(vector1));
-  print(Oprt::normalizeVector(vector1));
-  print(Oprt::increment(scalar));
-  print(Oprt::decrement(scalar));
-  print(Oprt::pow(scalar, scalar));
-  print(Oprt::multiplyByScalar(vector2, scalar));
-  print(Oprt::divisionByScalar(vector1, scalar));
-  print(Oprt::getAngleBetweenVectors(vector1, vector2));
-
   system("pause");
   return 0;
 }
