@@ -21,6 +21,7 @@ namespace algb
         {
         private:
             const char_type separator;
+            
             regex_type setRegex;
             regex_type writeRegex;
             regex_type writeAllRegex;
