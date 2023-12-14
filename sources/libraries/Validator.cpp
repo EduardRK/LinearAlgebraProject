@@ -14,7 +14,7 @@ algb::libr::CommandValidator::~CommandValidator()
 
 auto algb::libr::CommandValidator::generateRegex() -> void const
 {
-    line_type tempSetRegex = "/^((SET)" + separator;
+    line_type tempSetRegex = "^((SET)" + separator;
     tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*))" + separator;
     tempSetRegex += "*)(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE)(" + separator;
     tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*)){2}$|^((SET)" + separator;
@@ -23,7 +23,7 @@ auto algb::libr::CommandValidator::generateRegex() -> void const
     tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*))$|^((SET)" + separator;
     tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*))(" + separator;
     tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY))))[^" + separator;
-    tempSetRegex += "]+)+$/gm";
+    tempSetRegex += "]+)+$";
     this->setRegex = regex_type(tempSetRegex);
 
     this->writeAllRegex = regex_type("^(WRITEALL)$");
