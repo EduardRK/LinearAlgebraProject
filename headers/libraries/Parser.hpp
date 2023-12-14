@@ -11,14 +11,22 @@ namespace algb
     {
         class Parser
         {
+        public:
+            virtual ~Parser();
+
+            virtual auto parse(line_type const &t) -> lines_type const = 0;
+        };
+
+        class LineParser : public Parser
+        {
         private:
             const char_type separator;
 
         public:
-            Parser(char_type const &separator);
-            ~Parser();
+            LineParser(char_type const &separator);
+            ~LineParser();
 
-            auto parse(line_type const &line) -> lines_type;
+            auto parse(line_type const &line) -> lines_type const override;
         };
     }
 }

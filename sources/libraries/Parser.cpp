@@ -1,14 +1,18 @@
 #include "Parser.hpp"
 
-algb::libr::Parser::Parser(char_type const &separator) : separator{separator}
-{
-}
-
 algb::libr::Parser::~Parser()
 {
 }
 
-auto algb::libr::Parser::parse(line_type const &line) -> lines_type
+algb::libr::LineParser::LineParser(char_type const &separator) : separator{separator}
+{
+}
+
+algb::libr::LineParser::~LineParser()
+{
+}
+
+auto algb::libr::LineParser::parse(line_type const &line) -> lines_type const
 {
     line_type temp = "";
     lines_type result;

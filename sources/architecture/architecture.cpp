@@ -14,7 +14,7 @@ algb::arch::Interpreter::Interpreter(line_type const &logPath, line_type const &
 
 algb::arch::Interpreter::Interpreter(line_type const &logPath, line_type const &resultPath, const char_type separator)
 {
-  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::Parser(separator), new libr::CommandValidator(separator));
+  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::LineParser(separator), new libr::CommandValidator(separator));
 }
 
 algb::arch::Interpreter::Interpreter()
@@ -24,13 +24,29 @@ algb::arch::Interpreter::Interpreter()
 
 algb::arch::Interpreter::Interpreter(const char_type separator)
 {
-  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::Parser(separator), new libr::CommandValidator(separator));
+  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::LineParser(separator), new libr::CommandValidator(separator));
 }
 
 algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator) : reader{reader}, writer{writer}, parser{parser}, validator{validator}, commands_{
                                                                                                                                                                                                            {"SET", &algb::arch::Interpreter::setVariable},
-                                                                                                                                                                                                           {"DOT", &algb::arch::Interpreter::dotProduct}}
+                                                                                                                                                                                                           {"READ", &algb::arch::Interpreter::readVariable},
+                                                                                                                                                                                                           {"WRITE", &algb::arch::Interpreter::writeVariable},
+                                                                                                                                                                                                           {"WRITEALL", &algb::arch::Interpreter::writeAllVariable},
+                                                                                                                                                                                                           {"DOT", &algb::arch::Interpreter::dotProduct},
+                                                                                                                                                                                                           {"CROSS", &algb::arch::Interpreter::crossProduct},
+                                                                                                                                                                                                           {"SUM", &algb::arch::Interpreter::sum},
+                                                                                                                                                                                                           {"SUB", &algb::arch::Interpreter::sub},
+                                                                                                                                                                                                           {"INC", &algb::arch::Interpreter::increment},
+                                                                                                                                                                                                           {"DEC", &algb::arch::Interpreter::decrement},
+                                                                                                                                                                                                           {"POW", &algb::arch::Interpreter::pow},
+                                                                                                                                                                                                           {"MULT", &algb::arch::Interpreter::multiplyByScalar},
+                                                                                                                                                                                                           {"DIV", &algb::arch::Interpreter::divisionByScalar},
+                                                                                                                                                                                                           {"ANGLE", &algb::arch::Interpreter::getAngleBetweenVectors},
+                                                                                                                                                                                                           {"NORM", &algb::arch::Interpreter::norm},
+                                                                                                                                                                                                           {"NORMALIZE", &algb::arch::Interpreter::normalizeVector},
+                                                                                                                                                                                                           {"COPY", &algb::arch::Interpreter::copy}}
 {
+  this->validator->generateRegex();
 }
 
 algb::arch::Interpreter::~Interpreter()
@@ -40,23 +56,30 @@ algb::arch::Interpreter::~Interpreter()
   delete this->parser;
 }
 
-auto algb::arch::Interpreter::readLog() -> lines_type
+auto algb::arch::Interpreter::interpret() -> void
 {
-  return reader->read();
-}
-
-auto algb::arch::Interpreter::interpret(lines_type const &commands) -> void
-{
+  lines_type commands = reader->read();
   for (line_type command : commands)
   {
-    /*
-      this
-      parse command
-      setVariable
-      call functions
-      writer.write()
-    */
+    if (!validator->isValid(command))
+    {
+      continue;
+      // exeption ?
+    }
+
+    interpret(command);
   }
+}
+
+auto algb::arch::Interpreter::interpret(line_type const &command) -> void
+{
+  /*
+       this
+       parse command
+       setVariable
+       call functions
+       writer.write()
+  */
 }
 
 // auto algb::arch::Interpreter::interpret(lines_type const &cmd) -> void
@@ -68,19 +91,19 @@ auto algb::arch::Interpreter::interpret(lines_type const &commands) -> void
 
 auto algb::arch::Interpreter::setVariable(lines_type const &lines) -> void
 {
-  auto name = lines.front();
-  auto value = lines_type(++lines.begin(), lines.end());
+  line_type name = lines.front();
+  lines_type value = lines_type(++lines.begin(), lines.end());
   this->database_.setVariable(name, value);
 }
 
 auto algb::arch::Interpreter::dotProduct(lines_type const &lines) -> void
 {
-  libr::container_type<value_type> v1, v2;
+  container_type v1, v2;
   // value_type val;
 
-  auto leftName = *lines.begin();
-  auto rightName = *++lines.begin();
-  auto newName = *++lines.begin();
+  line_type leftName = *lines.begin();
+  line_type rightName = *++lines.begin();
+  line_type newName = *++lines.begin();
 
   this->database_.getVariable(v1, leftName);
   this->database_.getVariable(v2, rightName);
