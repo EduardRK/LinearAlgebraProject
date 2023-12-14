@@ -43,7 +43,7 @@ namespace algb
       parser_type *parser;
 
       vrbl::Database<container_type, line_type> database_;
-
+      
       std::unordered_map<line_type, void (Interpreter::*)(lines_type const &)> commands_;
 
       Interpreter(reader_type *reader, writer_type *writer, parser_type *parser);
