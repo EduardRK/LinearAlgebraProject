@@ -60,6 +60,11 @@ algb::arch::Interpreter::~Interpreter()
 auto algb::arch::Interpreter::interpret() -> void
 {
   lines_type commands = reader->read();
+  interpret(commands);
+}
+
+auto algb::arch::Interpreter::interpret(lines_type const &commands) -> void
+{
   for (line_type command : commands)
   {
     if (!validator->isValid(command))
@@ -68,14 +73,6 @@ auto algb::arch::Interpreter::interpret() -> void
       // exeption ?
     }
 
-    interpret(command);
-  }
-}
-
-auto algb::arch::Interpreter::interpret(lines_type const &commands) -> void
-{
-  for (line_type command : commands)
-  {
     interpret(command);
   }
 }
