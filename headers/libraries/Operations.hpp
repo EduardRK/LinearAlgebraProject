@@ -37,13 +37,13 @@ namespace algb
       static auto sum(container_type<T> const &left, container_type<T> const &right) -> container_type<T>;
 
       template <class T>
-      static auto increment(container_type<T> &scalar) -> container_type<T>;
+      static auto increment(container_type<T> const &scalar) -> container_type<T>;
 
       template <class T>
       static auto sub(container_type<T> const &left, container_type<T> const &right) -> container_type<T>;
 
       template <class T>
-      static auto decrement(container_type<T> &scalar) -> container_type<T>;
+      static auto decrement(container_type<T> const &scalar) -> container_type<T>;
 
       template <class T>
       static auto norm(container_type<T> const &vect) -> container_type<T>;
@@ -118,7 +118,7 @@ auto algb::libr::Oprt::sum(container_type<T> const &left, container_type<T> cons
     throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
-  container_type<T> result;
+  container_type<T> result(left.size());
   for (size_t i = 0; i < left.size(); ++i)
   {
     result.push_back(left.at(i) + right.at(i));
@@ -128,15 +128,14 @@ auto algb::libr::Oprt::sum(container_type<T> const &left, container_type<T> cons
 }
 
 template <class T>
-auto algb::libr::Oprt::increment(container_type<T> &scalar) -> container_type<T>
+auto algb::libr::Oprt::increment(container_type<T> const &scalar) -> container_type<T>
 {
   if (scalar.size() != 1)
   {
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  ++scalar.at(0);
-  return scalar;
+  return container_type<T>{scalar.at(0) + 1};
 }
 
 template <class T>
@@ -147,7 +146,7 @@ auto algb::libr::Oprt::sub(container_type<T> const &left, container_type<T> cons
     throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
-  container_type<T> result;
+  container_type<T> result(left.size());
   for (size_t i = 0; i < left.size(); ++i)
   {
     result.push_back(left.at(i) - right.at(i));
@@ -157,15 +156,14 @@ auto algb::libr::Oprt::sub(container_type<T> const &left, container_type<T> cons
 }
 
 template <class T>
-auto algb::libr::Oprt::decrement(container_type<T> &scalar) -> container_type<T>
+auto algb::libr::Oprt::decrement(container_type<T> const &scalar) -> container_type<T>
 {
   if (scalar.size() != 1)
   {
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  --scalar.at(0);
-  return scalar;
+  return container_type<T>{scalar.at(0) + 1};
 }
 
 template <class T>
@@ -177,14 +175,7 @@ auto algb::libr::Oprt::norm(container_type<T> const &vect) -> container_type<T>
 template <class T>
 auto algb::libr::Oprt::copy(container_type<T> const &vect) -> container_type<T>
 {
-  container_type<T> temp;
-
-  for (T element : vect)
-  {
-    temp.push_back(element);
-  }
-
-  return temp;
+  return container_type<T>{vect};
 }
 
 template <class T>
@@ -195,8 +186,8 @@ auto algb::libr::Oprt::multiplyByScalar(container_type<T> const &vect, container
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  container_type<T> result;
-  for (T element : vect)
+  container_type<T> result(vect.size());
+  for (T &element : vect)
   {
     result.push_back(element * scalar.at(0));
   }
@@ -212,8 +203,8 @@ auto algb::libr::Oprt::divisionByScalar(container_type<T> const &vect, container
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  container_type<T> result;
-  for (T element : vect)
+  container_type<T> result(vect.size());
+  for (T &element : vect)
   {
     result.push_back(element / scalar.at(0));
   }

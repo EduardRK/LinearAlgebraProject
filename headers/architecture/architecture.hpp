@@ -7,6 +7,7 @@
 #include "Writer.hpp"
 #include "Parser.hpp"
 #include "Operations.hpp"
+#include "Validator.hpp"
 #include "variables.hpp"
 
 namespace algb
@@ -21,12 +22,13 @@ namespace algb
     using reader_type = libr::Reader;
     using writer_type = libr::Writer;
     using parser_type = libr::Parser;
+    using validator_type = libr::Validator;
 
     class Interpreter
     {
     public:
-      Interpreter(line_type const &logPath, const char_type separator);
-      Interpreter(line_type const &logPath);
+      Interpreter(line_type const &logPath, line_type const &resultPath, const char_type separator);
+      Interpreter(line_type const &logPath, line_type const &resultPath);
       Interpreter(const char_type separator);
       Interpreter();
 
@@ -41,12 +43,13 @@ namespace algb
       reader_type *reader;
       writer_type *writer;
       parser_type *parser;
+      validator_type *validator;
 
       vrbl::Database<container_type, line_type> database_;
-      
+
       std::unordered_map<line_type, void (Interpreter::*)(lines_type const &)> commands_;
 
-      Interpreter(reader_type *reader, writer_type *writer, parser_type *parser);
+      Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator);
 
       auto setVariable(lines_type const &lines) -> void;
       auto dotProduct(lines_type const &lines) -> void;

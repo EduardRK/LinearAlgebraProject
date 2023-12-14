@@ -7,14 +7,14 @@
 #include "Parser.hpp"
 #include "Operations.hpp"
 
-algb::arch::Interpreter::Interpreter(line_type const &logPath)
+algb::arch::Interpreter::Interpreter(line_type const &logPath, line_type const &resultPath)
 {
-  Interpreter(logPath, DEFAULT_SEPARATOR);
+  Interpreter(logPath, resultPath, DEFAULT_SEPARATOR);
 }
 
-algb::arch::Interpreter::Interpreter(line_type const &logPath, const char_type separator)
+algb::arch::Interpreter::Interpreter(line_type const &logPath, line_type const &resultPath, const char_type separator)
 {
-  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(logPath), new libr::Parser(separator));
+  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::Parser(separator), new libr::CommandValidator(separator));
 }
 
 algb::arch::Interpreter::Interpreter()
@@ -24,16 +24,13 @@ algb::arch::Interpreter::Interpreter()
 
 algb::arch::Interpreter::Interpreter(const char_type separator)
 {
-  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::Parser(separator));
+  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::Parser(separator), new libr::CommandValidator(separator));
 }
 
-algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, parser_type *parser) : commands_{
-                                                                                                          {"SET", &algb::arch::Interpreter::setVariable},
-                                                                                                          {"DOT", &algb::arch::Interpreter::dotProduct}}
+algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator) : reader{reader}, writer{writer}, parser{parser}, validator{validator}, commands_{
+                                                                                                                                                                                                           {"SET", &algb::arch::Interpreter::setVariable},
+                                                                                                                                                                                                           {"DOT", &algb::arch::Interpreter::dotProduct}}
 {
-  this->reader = reader;
-  this->writer = writer;
-  this->parser = parser;
 }
 
 algb::arch::Interpreter::~Interpreter()
