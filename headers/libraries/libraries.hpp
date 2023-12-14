@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <regex>
 
 namespace algb
 {
@@ -14,6 +15,7 @@ namespace algb
         using path_type = std::string;
         using line_type = std::string;
         using lines_type = std::vector<std::string>;
+        using regex_type = std::regex;
 
         template <class T>
         using container_type = std::vector<T>;

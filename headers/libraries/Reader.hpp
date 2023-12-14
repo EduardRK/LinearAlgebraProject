@@ -13,12 +13,16 @@ namespace algb
         class Reader
         {
         public:
+            virtual ~Reader();
+
             virtual auto read() -> lines_type const = 0;
         };
 
         class FileReader : public Reader
         {
         private:
+            static constexpr message_type WRONG_PATH = "Wrong path";
+            
             const path_type path;
             std::ifstream input;
 

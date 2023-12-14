@@ -13,7 +13,7 @@ namespace algb
 {
   namespace libr
   {
-    class Oprt
+    class Oprt final
     {
     private:
       Oprt();
@@ -47,6 +47,9 @@ namespace algb
 
       template <class T>
       static auto norm(container_type<T> const &vect) -> container_type<T>;
+
+      template <class T>
+      static auto copy(container_type<T> const &vect) -> container_type<T>;
 
       template <class T>
       static auto multiplyByScalar(container_type<T> const &vect, container_type<T> const &scalar) -> container_type<T>;
@@ -169,6 +172,19 @@ template <class T>
 auto algb::libr::Oprt::norm(container_type<T> const &vect) -> container_type<T>
 {
   return container_type<T>{sqrtf(dotProduct(vect, vect).at(0))};
+}
+
+template <class T>
+auto algb::libr::Oprt::copy(container_type<T> const &vect) -> container_type<T>
+{
+  container_type<T> temp;
+
+  for (T element : vect)
+  {
+    temp.push_back(element);
+  }
+
+  return temp;
 }
 
 template <class T>
