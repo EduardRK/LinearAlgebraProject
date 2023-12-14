@@ -15,30 +15,30 @@ algb::libr::CommandValidator::~CommandValidator()
 auto algb::libr::CommandValidator::generateRegex() -> void const
 {
     line_type tempSetRegex = "^((SET)" + separator;
-    tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*))" + separator;
-    tempSetRegex += "*)(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE)(" + separator;
-    tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*)){2}$|^((SET)" + separator;
-    tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*))" + separator;
-    tempSetRegex += "(INC|DEC|NORM|NORMALIZE|COPY)(" + separator;
-    tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*))$|^((SET)" + separator;
-    tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)*))(" + separator;
-    tempSetRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY))))[^" + separator;
+    tempSetRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*))" + separator;
+    tempSetRegex += "*)" + GROUP_BINARY_OPERATIONS + "(" + separator;
+    tempSetRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*)*)){2}$|^((SET)" + separator;
+    tempSetRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*)*))" + separator;
+    tempSetRegex += "" + GROUP_UNARY_OPERATIONS + "(" + separator;
+    tempSetRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*)*))$|^((SET)" + separator;
+    tempSetRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*)*))(" + separator;
+    tempSetRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + ")))[^" + separator;
     tempSetRegex += "]+)+$";
     this->setRegex = regex_type(tempSetRegex);
 
     this->writeAllRegex = regex_type("^(WRITEALL)$");
 
     line_type tempReadRegex = "^(READ)" + separator;
-    tempReadRegex += "((?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[^" + separator;
+    tempReadRegex += "((?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[^" + separator;
     tempReadRegex += "])+$";
     this->readRegex = regex_type(tempReadRegex);
 
     line_type tempWriteRegex = "^(WRITE)(" + separator;
-    tempWriteRegex += "(?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))([a-zA-Z]\\w*))+$|^(WRITE)" + separator;
-    tempWriteRegex += "((DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE)(" + separator;
-    tempWriteRegex += "(?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)){2})$|^(WRITE)" + separator;
-    tempWriteRegex += "((INC|DEC|NORM|NORMALIZE|COPY)(" + separator;
-    tempWriteRegex += "(?:(?!(DOT|CROSS|POW|SUM|SUM|SUB|MULT|DIV|ANGLE|INC|DEC|NORM|NORMALIZE|COPY)))[a-zA-Z](\\w*)))$";
+    tempWriteRegex += "(?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))([a-zA-Z]\\w*))+$|^(WRITE)" + separator;
+    tempWriteRegex += "(" + GROUP_BINARY_OPERATIONS + "(" + separator;
+    tempWriteRegex += "(?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*)){2})$|^(WRITE)" + separator;
+    tempWriteRegex += "(" + GROUP_UNARY_OPERATIONS + "(" + separator;
+    tempWriteRegex += "(?:(?!" + GROUP_ALL_OPERATIONS_AND_SYSTEM_WORDS + "))[a-zA-Z](\\w*)))$";
     this->writeRegex = regex_type(tempWriteRegex);
 }
 

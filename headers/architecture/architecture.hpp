@@ -18,12 +18,13 @@ namespace algb
     using char_type = libr::char_type;
     using line_type = libr::line_type;
     using lines_type = libr::lines_type;
-    using value_type = float;
+    using value_type = libr::value_type;
     using container_type = libr::container_type<value_type>;
     using reader_type = libr::Reader;
     using writer_type = libr::Writer;
     using parser_type = libr::Parser;
     using validator_type = libr::Validator;
+    using set_type = std::unordered_set<line_type>;
 
     class Interpreter
     {
@@ -40,8 +41,8 @@ namespace algb
     private:
       static constexpr char_type DEFAULT_SEPARATOR = ' ';
 
-      const std::unordered_set<line_type> BINARY_OPERATIONS{"DOT", "CROSS", "SUM", "SUB", "ANGLE", "POW", "MULT", "DIV"};
-      const std::unordered_set<line_type> UNARY_OPERATIONS{"INC", "DEC", "NORM", "NORMALIZE", "COPY"};
+      const set_type BINARY_OPERATIONS{"DOT", "CROSS", "SUM", "SUB", "ANGLE", "POW", "MULT", "DIV"};
+      const set_type UNARY_OPERATIONS{"INC", "DEC", "NORM", "NORMALIZE", "COPY"};
 
       reader_type *reader;
       writer_type *writer;
@@ -53,6 +54,7 @@ namespace algb
 
       Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator);
 
+      auto interpret(lines_type const &commands) -> void;
       auto interpret(line_type const &command) -> void;
 
       auto setVariable(lines_type const &lines) -> void;

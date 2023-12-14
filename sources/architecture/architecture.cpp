@@ -72,6 +72,14 @@ auto algb::arch::Interpreter::interpret() -> void
   }
 }
 
+auto algb::arch::Interpreter::interpret(lines_type const &commands) -> void
+{
+  for (line_type command : commands)
+  {
+    interpret(command);
+  }
+}
+
 auto algb::arch::Interpreter::interpret(line_type const &command) -> void
 {
   /*
