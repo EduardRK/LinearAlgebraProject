@@ -4,36 +4,33 @@ algb::libr::Parser::~Parser()
 {
 }
 
-algb::libr::LineParser::LineParser(char_type const &separator) : separator{separator}
+algb::libr::CommandParser::CommandParser(char_type const &separator) : separator{separator}
 {
 }
 
-algb::libr::LineParser::~LineParser()
+algb::libr::CommandParser::~CommandParser()
 {
 }
 
-auto algb::libr::LineParser::parse(line_type const &line) -> lines_type const
+auto algb::libr::CommandParser::parse(line_type const &line) -> lines_type const
 {
-    line_type temp = "";
     lines_type result;
 
-    for (char c : line)
+    auto startIterator = line.begin();
+    auto currentIterator = startIterator;
+
+    for (; currentIterator < line.end(); ++currentIterator)
     {
-        if (c != separator)
+        if (*currentIterator != separator)
         {
-            temp += c;
+            continue;
         }
-        else
-        {
-            result.push_back(temp);
-            temp = "";
-        }
+
+        result.push_back(line_type(startIterator, currentIterator));
+        startIterator = currentIterator + 1;
     }
 
-    if (!temp.empty())
-    {
-        result.push_back(temp);
-    }
+    result.push_back(line_type(startIterator, currentIterator));
 
     return result;
 }

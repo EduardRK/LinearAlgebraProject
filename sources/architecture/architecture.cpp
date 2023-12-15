@@ -14,7 +14,7 @@ algb::arch::Interpreter::Interpreter(line_type const &logPath, line_type const &
 
 algb::arch::Interpreter::Interpreter(line_type const &logPath, line_type const &resultPath, const char_type separator)
 {
-  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::LineParser(separator), new libr::CommandValidator(separator));
+  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::CommandParser(separator), new libr::CommandValidator(separator));
 }
 
 algb::arch::Interpreter::Interpreter()
@@ -24,7 +24,7 @@ algb::arch::Interpreter::Interpreter()
 
 algb::arch::Interpreter::Interpreter(const char_type separator)
 {
-  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::LineParser(separator), new libr::CommandValidator(separator));
+  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::CommandParser(separator), new libr::CommandValidator(separator));
 }
 
 algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator) : reader{reader}, writer{writer}, parser{parser}, validator{validator}, commands_{

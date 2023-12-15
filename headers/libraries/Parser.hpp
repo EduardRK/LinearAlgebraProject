@@ -17,14 +17,14 @@ namespace algb
             virtual auto parse(line_type const &t) -> lines_type const = 0;
         };
 
-        class LineParser : public Parser
+        class CommandParser : public Parser
         {
         private:
             const char_type separator;
 
         public:
-            LineParser(char_type const &separator);
-            ~LineParser();
+            CommandParser(char_type const &separator);
+            ~CommandParser();
 
             auto parse(line_type const &line) -> lines_type const override;
         };
