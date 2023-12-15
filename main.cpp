@@ -30,6 +30,12 @@ void print(std::vector<std::string> vect)
 
 int main(int argc, char **argv)
 {
+  algb::libr::CommandValidator validator(' ');
+  validator.generateRegex();
+
+  std::string command = "SET v1 CROSS v2 v3";
+  std::cout << validator.isValid(command) << std::endl;
+
   system("pause");
   return 0;
 }
