@@ -26,6 +26,7 @@ auto algb::libr::FileReader::read() -> lines_type const
 {
     lines_type result;
     line_type temp;
+
     while (std::getline(input, temp))
     {
         result.push_back(temp);
@@ -46,6 +47,7 @@ auto algb::libr::TerminalReader::read() -> lines_type const
 {
     lines_type result;
     line_type temp;
+
     while (std::getline(std::cin, temp))
     {
         if (temp == END_MESSAGE)
@@ -55,5 +57,6 @@ auto algb::libr::TerminalReader::read() -> lines_type const
 
         result.push_back(temp);
     }
+    
     return result;
 }

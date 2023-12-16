@@ -21,8 +21,8 @@ namespace algb
       static constexpr message_type DIFFERENT_DIMENSIONS = "Different dimensions";
       static constexpr message_type WRONG_DIMENSIONS = "Wrong dimensions";
 
-      Oprt();
-      ~Oprt();
+      Oprt() {}
+      ~Oprt() {}
 
     public:
       template <class T>
@@ -120,6 +120,7 @@ auto algb::libr::Oprt::sum(container_type<T> const &left, container_type<T> cons
   }
 
   container_type<T> result(left.size());
+
   for (size_t i = 0; i < left.size(); ++i)
   {
     result.push_back(left.at(i) + right.at(i));
@@ -148,6 +149,7 @@ auto algb::libr::Oprt::sub(container_type<T> const &left, container_type<T> cons
   }
 
   container_type<T> result(left.size());
+
   for (size_t i = 0; i < left.size(); ++i)
   {
     result.push_back(left.at(i) - right.at(i));
@@ -188,6 +190,7 @@ auto algb::libr::Oprt::multiplyByScalar(container_type<T> const &vect, container
   }
 
   container_type<T> result(vect.size());
+
   for (T &element : vect)
   {
     result.push_back(element * scalar.at(0));
@@ -205,6 +208,7 @@ auto algb::libr::Oprt::divisionByScalar(container_type<T> const &vect, container
   }
 
   container_type<T> result(vect.size());
+
   for (T &element : vect)
   {
     result.push_back(element / scalar.at(0));

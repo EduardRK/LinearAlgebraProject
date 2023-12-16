@@ -14,7 +14,7 @@ namespace algb
         public:
             virtual ~Parser();
 
-            virtual auto parse(line_type const &t) -> lines_type const = 0;
+            virtual auto parse(line_type const &line) -> lines_type const = 0;
         };
 
         class CommandParser : public Parser

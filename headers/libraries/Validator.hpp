@@ -20,6 +20,8 @@ namespace algb
         class CommandValidator : public Validator
         {
         private:
+            using regex_type = std::regex;
+
             const line_type separator;
 
             regex_type setRegex;

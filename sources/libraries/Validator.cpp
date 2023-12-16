@@ -50,5 +50,8 @@ auto algb::libr::CommandValidator::isValid(line_type const &line) -> bool_type c
     {
         return true;
     }
-    return false;
+    else
+    {
+        return false;
+    }
 }
