@@ -191,7 +191,7 @@ auto algb::libr::Oprt::multiplyByScalar(container_type<T> const &vect, container
 
   container_type<T> result(vect.size());
 
-  for (T &element : vect)
+  for (T const &element : vect)
   {
     result.push_back(element * scalar.front());
   }
@@ -209,7 +209,7 @@ auto algb::libr::Oprt::divisionByScalar(container_type<T> const &vect, container
 
   container_type<T> result(vect.size());
 
-  for (T &element : vect)
+  for (T const &element : vect)
   {
     result.push_back(element / scalar.front());
   }
