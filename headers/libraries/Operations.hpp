@@ -16,12 +16,13 @@ namespace algb
     class Oprt final
     {
     private:
-      Oprt();
-      ~Oprt();
       static constexpr value_type DIMENSION_CROSS_PRODUCT = 3;
       static constexpr message_type SHOULD_BE_SCALAR = "Should be scalar";
       static constexpr message_type DIFFERENT_DIMENSIONS = "Different dimensions";
       static constexpr message_type WRONG_DIMENSIONS = "Wrong dimensions";
+
+      Oprt();
+      ~Oprt();
 
     public:
       template <class T>

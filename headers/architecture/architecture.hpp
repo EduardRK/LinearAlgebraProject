@@ -15,30 +15,20 @@ namespace algb
 {
   namespace arch
   {
-    using char_type = libr::char_type;
-    using line_type = libr::line_type;
-    using lines_type = libr::lines_type;
-    using value_type = libr::value_type;
-    using container_type = libr::container_type<value_type>;
-    using reader_type = libr::Reader;
-    using writer_type = libr::Writer;
-    using parser_type = libr::Parser;
-    using validator_type = libr::Validator;
-    using set_type = std::unordered_set<line_type>;
-
     class Interpreter
     {
-    public:
-      Interpreter(line_type const &logPath, line_type const &resultPath, const char_type separator);
-      Interpreter(line_type const &logPath, line_type const &resultPath);
-      Interpreter(const char_type separator);
-      Interpreter();
-
-      ~Interpreter();
-
-      auto interpret() -> void;
-
     private:
+      using char_type = libr::char_type;
+      using line_type = libr::line_type;
+      using lines_type = libr::lines_type;
+      using value_type = libr::value_type;
+      using container_type = libr::container_type<value_type>;
+      using reader_type = libr::Reader;
+      using writer_type = libr::Writer;
+      using parser_type = libr::Parser;
+      using validator_type = libr::Validator;
+      using set_type = std::unordered_set<line_type>;
+
       static constexpr char_type DEFAULT_SEPARATOR = ' ';
 
       const set_type BINARY_OPERATIONS{"DOT", "CROSS", "SUM", "SUB", "ANGLE", "POW", "MULT", "DIV"};
@@ -54,6 +44,17 @@ namespace algb
 
       Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator);
 
+    public:
+      Interpreter(line_type const &logPath, line_type const &resultPath, const char_type separator);
+      Interpreter(line_type const &logPath, line_type const &resultPath);
+      Interpreter(const char_type separator);
+      Interpreter();
+
+      ~Interpreter();
+
+      auto interpret() -> void;
+
+    private:
       auto interpret(lines_type const &commands) -> void;
       auto interpret(line_type const &command) -> void;
 
