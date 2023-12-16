@@ -121,14 +121,69 @@ auto algb::arch::Interpreter::setVariable(lines_type const &lines) -> void
 
 auto algb::arch::Interpreter::readVariable(lines_type const &lines) -> void
 {
+  // line_type nameOrPath = lines.front();
+  // lines_type newCommands;
+  // reader_type *newReader;
+  // //* Need method isVariable
+  // if (database_->isVariable(nameOrPath))
+  // {
+  //   lines_type path;
+
+  //   database_.getVariable(path, nameOrPath);
+  //   newReader = new algb::libr::FileReader(path.front());
+  // }
+  // else
+  // {
+  //   newReader = new algb::libr::FileReader(nameOrPath);
+  // }
+
+  // newCommands = newReader->read();
+
+  // interpret(newCommands);
 }
 
 auto algb::arch::Interpreter::writeVariable(lines_type const &lines) -> void
 {
+  line_type command = lines.front();
+
+  if (isOperation(command))
+  {
+    line_type name = "TEMP";
+    container_type result = (this->*this->commands_.at(command))(lines_type(++lines.begin(), lines.end()));
+    lines_type linesResult = containerToLines(result);
+    line_type finalString = name + ":";
+
+    for (line_type line : linesResult)
+    {
+      finalString += " " + line;
+    }
+
+    writer->write(finalString);
+  }
+  else
+  {
+    line_type finalString = "";
+    lines_type values;
+
+    for (line_type line : lines)
+    {
+      database_.getVariable(values, line);
+      finalString += line + ":";
+
+      for (line_type value : values)
+      {
+        finalString += " " + value;
+      }
+
+      writer->write(finalString);
+      finalString = "";
+    }
+  }
 }
 
 auto algb::arch::Interpreter::writeAllVariables(lines_type const &lines) -> void
 {
+  //* Need all variables from database
 }
 
 auto algb::arch::Interpreter::dotProduct(lines_type const &lines) -> container_type
@@ -138,6 +193,114 @@ auto algb::arch::Interpreter::dotProduct(lines_type const &lines) -> container_t
   initialize(v1, v2, lines);
 
   return algb::libr::Oprt::dotProduct(v1, v2);
+}
+
+auto algb::arch::Interpreter::crossProduct(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::crossProduct(v1, v2);
+}
+
+auto algb::arch::Interpreter::pow(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::pow(v1, v2);
+}
+
+auto algb::arch::Interpreter::sum(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::sum(v1, v2);
+}
+
+auto algb::arch::Interpreter::increment(lines_type const &lines) -> container_type
+{
+  container_type v;
+
+  initialize(v, lines);
+
+  return algb::libr::Oprt::increment(v);
+}
+
+auto algb::arch::Interpreter::sub(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::sub(v1, v2);
+}
+
+auto algb::arch::Interpreter::decrement(lines_type const &lines) -> container_type
+{
+  container_type v;
+
+  initialize(v, lines);
+
+  return algb::libr::Oprt::decrement(v);
+}
+
+auto algb::arch::Interpreter::norm(lines_type const &lines) -> container_type
+{
+  container_type v;
+
+  initialize(v, lines);
+
+  return algb::libr::Oprt::norm(v);
+}
+
+auto algb::arch::Interpreter::copy(lines_type const &lines) -> container_type
+{
+  container_type v;
+
+  initialize(v, lines);
+
+  return algb::libr::Oprt::copy(v);
+}
+
+auto algb::arch::Interpreter::multiplyByScalar(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::multiplyByScalar(v1, v2);
+}
+
+auto algb::arch::Interpreter::divisionByScalar(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::divisionByScalar(v1, v2);
+}
+
+auto algb::arch::Interpreter::normalizeVector(lines_type const &lines) -> container_type
+{
+  container_type v;
+
+  initialize(v, lines);
+
+  return algb::libr::Oprt::normalizeVector(v);
+}
+
+auto algb::arch::Interpreter::getAngleBetweenVectors(lines_type const &lines) -> container_type
+{
+  container_type v1, v2;
+
+  initialize(v1, v2, lines);
+
+  return algb::libr::Oprt::getAngleBetweenVectors(v1, v2);
 }
 
 auto algb::arch::Interpreter::initialize(container_type &v1, container_type &v2, lines_type const &lines) -> void

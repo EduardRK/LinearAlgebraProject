@@ -40,7 +40,7 @@ namespace algb
       parser_type *parser;
       validator_type *validator;
 
-      vrbl::Database<container_type, line_type> database_;
+      vrbl::Database<container_type, lines_type> database_;
       std::unordered_map<line_type, container_type (Interpreter::*)(lines_type const &)> commands_;
 
       Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator);
@@ -60,23 +60,23 @@ namespace algb
       auto interpret(line_type const &command) -> void;
 
       auto setVariable(lines_type const &lines) -> void;
-      auto readVariable(lines_type const &lines) -> void; //TODO: Реализация
-      auto writeVariable(lines_type const &lines) -> void; //TODO: Реализация
-      auto writeAllVariables(lines_type const &lines) -> void; //TODO: Реализация
+      auto readVariable(lines_type const &lines) -> void;
+      auto writeVariable(lines_type const &lines) -> void;
+      auto writeAllVariables(lines_type const &lines) -> void;
 
       auto dotProduct(lines_type const &lines) -> container_type;
-      auto crossProduct(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto pow(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto sum(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto increment(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto sub(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto decrement(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto norm(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto copy(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto multiplyByScalar(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto divisionByScalar(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto normalizeVector(lines_type const &lines) -> container_type; //TODO: Реализация
-      auto getAngleBetweenVectors(lines_type const &lines) -> container_type; //TODO: Реализация
+      auto crossProduct(lines_type const &lines) -> container_type;
+      auto pow(lines_type const &lines) -> container_type;
+      auto sum(lines_type const &lines) -> container_type;
+      auto increment(lines_type const &lines) -> container_type;
+      auto sub(lines_type const &lines) -> container_type;
+      auto decrement(lines_type const &lines) -> container_type;
+      auto norm(lines_type const &lines) -> container_type;
+      auto copy(lines_type const &lines) -> container_type;
+      auto multiplyByScalar(lines_type const &lines) -> container_type;
+      auto divisionByScalar(lines_type const &lines) -> container_type;
+      auto normalizeVector(lines_type const &lines) -> container_type;
+      auto getAngleBetweenVectors(lines_type const &lines) -> container_type;
 
       auto initialize(container_type &v1, container_type &v2, lines_type const &lines) -> void;
       auto initialize(container_type &v, lines_type const &lines) -> void;

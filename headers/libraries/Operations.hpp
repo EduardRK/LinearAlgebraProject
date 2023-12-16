@@ -108,7 +108,7 @@ auto algb::libr::Oprt::pow(container_type<T> const &base, container_type<T> cons
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  return container_type<T>{powf(base.at(0), exponent.at(0))};
+  return container_type<T>{powf(base.front(), exponent.front())};
 }
 
 template <class T>
@@ -137,7 +137,7 @@ auto algb::libr::Oprt::increment(container_type<T> const &scalar) -> container_t
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  return container_type<T>{scalar.at(0) + 1};
+  return container_type<T>{scalar.front() + 1};
 }
 
 template <class T>
@@ -166,13 +166,13 @@ auto algb::libr::Oprt::decrement(container_type<T> const &scalar) -> container_t
     throw std::invalid_argument(SHOULD_BE_SCALAR);
   }
 
-  return container_type<T>{scalar.at(0) + 1};
+  return container_type<T>{scalar.front() - 1};
 }
 
 template <class T>
 auto algb::libr::Oprt::norm(container_type<T> const &vect) -> container_type<T>
 {
-  return container_type<T>{sqrtf(dotProduct(vect, vect).at(0))};
+  return container_type<T>{sqrtf(dotProduct(vect, vect).front())};
 }
 
 template <class T>
@@ -193,7 +193,7 @@ auto algb::libr::Oprt::multiplyByScalar(container_type<T> const &vect, container
 
   for (T &element : vect)
   {
-    result.push_back(element * scalar.at(0));
+    result.push_back(element * scalar.front());
   }
 
   return result;
@@ -211,7 +211,7 @@ auto algb::libr::Oprt::divisionByScalar(container_type<T> const &vect, container
 
   for (T &element : vect)
   {
-    result.push_back(element / scalar.at(0));
+    result.push_back(element / scalar.front());
   }
 
   return result;
@@ -231,5 +231,5 @@ auto algb::libr::Oprt::getAngleBetweenVectors(container_type<T> const &left, con
     throw std::invalid_argument(DIFFERENT_DIMENSIONS);
   }
 
-  return container_type<T>{acosf(divisionByScalar(dotProduct(left, right), dotProduct(norm(left), norm(right))).at(0))};
+  return container_type<T>{acosf(divisionByScalar(dotProduct(left, right), dotProduct(norm(left), norm(right))).front())};
 };
