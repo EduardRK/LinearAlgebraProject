@@ -29,11 +29,10 @@ namespace algb
       using writer_type = libr::Writer;
       using parser_type = libr::Parser;
       using validator_type = libr::Validator;
-      using set_type = std::unordered_set<line_type>;
 
       static constexpr char_type DEFAULT_SEPARATOR = ' ';
 
-      const set_type OPERATIONS{"DOT", "CROSS", "SUM", "SUB", "ANGLE", "POW", "MULT", "DIV", "INC", "DEC", "NORM", "NORMALIZE", "COPY"};
+      const std::unordered_set<line_type> OPERATIONS{"DOT", "CROSS", "SUM", "SUB", "ANGLE", "POW", "MULT", "DIV", "INC", "DEC", "NORM", "NORMALIZE", "COPY"};
 
       reader_type *reader;
       writer_type *writer;
