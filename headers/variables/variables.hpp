@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <tuple>
 #include <optional>
+#include <type_traits>
 
 #include "libraries.hpp"
 
@@ -26,7 +27,7 @@ namespace algb
       using lines_type = libr::lines_type;
 
       template <class T>
-      using conversion_func = std::optional<T *> (*)(const lines_type &);
+      using conversion_func = std::optional<T> (*)(const lines_type &);
 
       Database(const conversion_func<Ts>... conversionFunctions);
       ~Database();
@@ -34,7 +35,7 @@ namespace algb
       const line_type TYPES_ERROR = "TYPES DON'T MATCH";
       const line_type NAME_ERROR = "STORE DOESN'T CONTAIN VARIABLE WITH PASSED NAME";
 
-      template <int T>
+      template <int T = 0>
       auto defineType(void *&ptr, line_type &type_id, lines_type const &values) -> void;
 
       auto setVariable(
@@ -67,8 +68,10 @@ auto algb::vrbl::Database<Ts...>::defineType(void *&ptr, line_type &type_id, lin
     auto conversion_function = std::get<I>(this->conversionFunctions_);
     if (auto tmp = conversion_function(values); tmp.has_value())
     {
-      ptr = tmp.value();
-      type_id = typeid(*tmp.value()).name();
+      auto value = new std::remove_reference_t<decltype(tmp.value())>(tmp.value());
+
+      ptr = value;
+      type_id = typeid(*value).name();
     }
     else
     {
@@ -90,7 +93,7 @@ auto algb::vrbl::Database<Ts...>::setVariable(
   std::string type_id;
   void *ptr;
 
-  defineType<0>(ptr, type_id, values);
+  defineType(ptr, type_id, values);
 
   algb::vrbl::Variable box{
       ptr,
