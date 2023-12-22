@@ -22,7 +22,7 @@ namespace algb
         {
         private:
             static constexpr message_type WRONG_PATH = "Wrong path";
-            
+
             const path_type path;
             std::ifstream input;
 

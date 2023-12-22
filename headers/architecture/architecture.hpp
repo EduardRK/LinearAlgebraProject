@@ -79,6 +79,7 @@ namespace algb
 
       auto initialize(container_type &v1, container_type &v2, lines_type const &lines) -> void;
       auto initialize(container_type &v, lines_type const &lines) -> void;
+      auto initialize(container_type &v, line_type const &line) -> void;
 
       auto containerToLines(container_type const &container) -> lines_type;
 
