@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <map>
 #include <string>
 #include <stdexcept>
@@ -7,7 +8,10 @@
 #include <optional>
 #include <type_traits>
 
-#include "libraries.hpp"
+#include "Writer.hpp"
+#include "Reader.hpp"
+#include "Parser.hpp"
+#include "Operations.hpp"
 
 namespace algb
 {
