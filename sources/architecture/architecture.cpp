@@ -296,6 +296,7 @@ auto algb::arch::Interpreter::normalizeVector(lines_type const &lines) -> contai
 
 auto algb::arch::Interpreter::getAngleBetweenVectors(lines_type const &lines) -> container_type
 {
+
   container_type v1, v2;
 
   initialize(v1, v2, lines);

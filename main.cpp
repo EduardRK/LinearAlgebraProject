@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <map>
+#include <optional>
 
 #include "Validator.hpp"
 #include "architecture.hpp"
