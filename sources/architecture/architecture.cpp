@@ -7,24 +7,20 @@
 #include "Parser.hpp"
 #include "Operations.hpp"
 
-algb::arch::Interpreter::Interpreter(path_type const &logPath, path_type const &resultPath)
+algb::arch::Interpreter::Interpreter(path_type const &logPath, path_type const &resultPath) : Interpreter(logPath, resultPath, DEFAULT_SEPARATOR)
 {
-  Interpreter(logPath, resultPath, DEFAULT_SEPARATOR);
 }
 
-algb::arch::Interpreter::Interpreter(path_type const &logPath, path_type const &resultPath, const char_type separator)
+algb::arch::Interpreter::Interpreter(path_type const &logPath, path_type const &resultPath, const char_type separator) : Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::CommandParser(separator), new libr::CommandValidator(separator))
 {
-  Interpreter(new libr::FileReader(logPath), new libr::FileWriter(resultPath), new libr::CommandParser(separator), new libr::CommandValidator(separator));
 }
 
-algb::arch::Interpreter::Interpreter()
+algb::arch::Interpreter::Interpreter() : Interpreter{DEFAULT_SEPARATOR}
 {
-  Interpreter{DEFAULT_SEPARATOR};
 }
 
-algb::arch::Interpreter::Interpreter(const char_type separator)
+algb::arch::Interpreter::Interpreter(const char_type separator) : Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::CommandParser(separator), new libr::CommandValidator(separator))
 {
-  Interpreter(new libr::TerminalReader(), new libr::TerminalWriter(), new libr::CommandParser(separator), new libr::CommandValidator(separator));
 }
 
 algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, parser_type *parser, validator_type *validator) : reader{reader}, writer{writer}, parser{parser}, validator{validator}, commands_{
@@ -42,7 +38,6 @@ algb::arch::Interpreter::Interpreter(reader_type *reader, writer_type *writer, p
                                                                                                                                                                                                            {"NORMALIZE", &normalizeVector},
                                                                                                                                                                                                            {"COPY", &copy}}
 {
-  this->validator->generateRegex();
 }
 
 algb::arch::Interpreter::~Interpreter()
@@ -148,10 +143,9 @@ auto algb::arch::Interpreter::writeVariable(lines_type const &lines) -> void
 
   if (isOperation(command))
   {
-    line_type name = "TEMP";
     container_type result = (this->*this->commands_.at(command))(lines_type(++lines.begin(), lines.end()));
     lines_type linesResult = containerToLines(result);
-    line_type finalString = name + ":";
+    line_type finalString = "TEMP:";
 
     for (line_type line : linesResult)
     {
@@ -306,18 +300,18 @@ auto algb::arch::Interpreter::getAngleBetweenVectors(lines_type const &lines) ->
 
 auto algb::arch::Interpreter::initialize(container_type &v1, container_type &v2, lines_type const &lines) -> void
 {
-  line_type left = lines.front();
-  line_type right = lines.back();
-
-  database_.getVariable(v1, left);
-  database_.getVariable(v2, right);
+  initialize(v1, lines.front());
+  initialize(v2, lines.back());
 }
 
 auto algb::arch::Interpreter::initialize(container_type &v, lines_type const &lines) -> void
 {
-  line_type name = lines.front();
+  initialize(v, lines.front());
+}
 
-  database_.getVariable(v, name);
+auto algb::arch::Interpreter::initialize(container_type &v, line_type const &line) -> void
+{
+  database_.getVariable(v, line);
 }
 
 auto algb::arch::Interpreter::containerToLines(container_type const &container) -> lines_type

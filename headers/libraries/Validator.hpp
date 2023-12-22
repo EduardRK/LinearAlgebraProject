@@ -13,7 +13,6 @@ namespace algb
         public:
             virtual ~Validator();
 
-            virtual auto generateRegex() -> void const = 0;
             virtual auto isValid(line_type const &line) -> bool_type const = 0;
         };
 
@@ -34,8 +33,10 @@ namespace algb
             CommandValidator(const char_type separator);
             ~CommandValidator();
 
-            auto generateRegex() -> void const override;
             auto isValid(line_type const &line) -> bool_type const override;
+
+        private:
+            auto generateRegex() -> void const;
         };
     }
 }
